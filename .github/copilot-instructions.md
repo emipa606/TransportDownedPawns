@@ -1,51 +1,64 @@
-# Copilot Instructions for Transport Downed Pawns (Continued) Mod
+# GitHub Copilot Instructions for RimWorld Mod Project: Transport Downed Pawns (Continued)
 
 ## Mod Overview and Purpose
 
-The **Transport Downed Pawns (Continued)** mod is an update to the originally created mod by CornyTraces, revitalized to be compatible with RimWorld versions 1.0 to 1.5. The main objective of this mod is to enhance gameplay by enabling players to transport unconscious or otherwise incapacitated colonists and prisoners using transport pods. This capability adds a strategic layer for managing emergency situations and expanding colonist rescue operations within the game.
+### Mod Name
+**Transport Downed Pawns (Continued)**
+
+### Description
+The "Transport Downed Pawns (Continued)" mod, originally created by CornyTrace and updated by Targhetti, is designed to enhance the experience of managing colonists and prisoners in RimWorld. This mod allows unconscious or otherwise incapacitated members to be transported using a transport pod, improving logistics and emergency responses within the game. The mod has been updated to be compatible with versions 1.0 through 1.5. 
+
+### Purpose
+The main purpose of this mod is to provide players with a more streamlined and efficient way to handle incapacitated colonists during critical moments, such as attacks or emergencies requiring relocation.
 
 ## Key Features and Systems
 
-- **Transport of Downed Pawns**: Allows players to load immobile pawns into transport pods, facilitating easier relocation or rescue across the map.
-- **Compatibility with Multiple Versions**: Updated to function seamlessly with RimWorld versions 1.0 through 1.5.
-- **User Experience**: Maintains familiar functionality from the original mod, ensuring users have a consistent experience.
+- **Transport Capabilities**: Adds the ability for players to place incapacitated colonists and prisoners into transport pods manually.
+- **Compatibility**: Updated for RimWorld versions 1.0 to 1.5. Note that the mod retains the name of the original version with slight naming distinctions (spaces included).
+- **Maintenance**: Although testing is limited to non-DLC features, the mod provides robust functionality for the core game.
+- **Error Handling**: Users are encouraged to utilize the Log Uploader for error reporting and to use the Discord channel for more nuanced support.
 
 ## Coding Patterns and Conventions
 
-### General Conventions
-
-- **Consistent Naming**: Use PascalCase for class names and methods, following C# conventions for readability.
-- **Single Responsibility Principle**: Structure classes and methods so that they handle a single responsibility or functionality, promoting modular and maintainable code.
-
-### Specific Files
-
-- **Main.cs**:
-  - Ensure the main control flow of the mod is organized within the `Main` class.
-  - Encapsulate initialization logic and general management of mod settings.
-
-- **TransportPrisonersPatch.cs**:
-  - Implement static methods for patching transport functionality.
-  - Focus on the conditional logic for checking if a pawn can be included in a transport pod.
+- **C# Files Setup**: The project contains two primary C# files focusing on transport functionality and main execution logic:
+  - `Dialog_LoadTransporters_AddPawnsToTransferables.cs`: Includes a `Prefix` member for adding pawns to transfer lists.
+  - `Main.cs`: Serves as the mod’s primary entry point.
+- **Naming Conventions**: Types and members are named using PascalCase to conform to C# standards.
+- **File Organization**: C# and XML files are kept separate, with clear naming to indicate their roles within the mod.
 
 ## XML Integration
 
-- Utilize RimWorld's XML Defs to extend and modify game behaviors in tandem with C# logic.
-- Ensure Defs for transport pods are updated to include downed pawns as valid cargo.
-- XML changes should be documented inline where appropriate, explaining the purpose of modifications for future updates.
+- **About.xml**: Integrates the mod with RimWorld’s core systems and specifies dependencies. Ensure that the necessary Harmony dependencies are listed accurately.
+- **Dependencies**: The mod relies on Harmony (brrainz.harmony) for patch management and code injection.
 
 ## Harmony Patching
 
-- **Harmony Library**: Use the Harmony library to apply runtime patches to the game, allowing modifications without altering the original source code.
-- **Patch Structure**: 
-  - Identify and target the RimWorld methods related to transport pod functionality.
-  - Implement prefix or postfix methods to adjust transport logic.
-- **Logging and Debugging**: Implement logging statements to help trace execution flow during patching. This assists in troubleshooting and ensures the mod operates as expected.
+- **Harmony Use Case**: This mod applies Harmony patches to modify the default behavior of RimWorld, specifically enabling transport for incapacitated pawns.
+- **Prefix Patch**: The `Dialog_LoadTransporters_AddPawnsToTransferables.cs` file implements a prefix to alter transport loading behaviors.
+- **Safe Patching**: Ensure all patches are safe by checking for conflicts with other mods and maintaining compatibility across updates.
 
 ## Suggestions for Copilot
 
-- **Implement Auto-Completion**: Leverage Copilot's capabilities for method auto-completion and suggestions while writing patch logic.
-- **Refactor Assistance**: Use Copilot to suggest refactoring opportunities for cleaner, more efficient code, especially in areas like patch application logic.
-- **XML and Class Integration**: Utilize Copilot to bridge C# logic with XML changes effectively, ensuring seamless integration.
-- **Documentation Help**: Encourage Copilot to assist in generating user and developer documentation inline with code updates.
+1. **Code Completion and Testing**: Use Copilot to suggest additional methods to streamline pawn transport logic or test edge cases not yet covered.
+2. **Error Handling**: Leverage Copilot to enhance error detection mechanisms, such as exception handling or logging details.
+3. **Performance Optimization**: Consult Copilot for optimization hints, particularly in managing large lists of pawns during high-stress game scenarios.
+4. **New Feature Proposals**: Request Copilot to brainstorm potential new features or improvements that could augment the transport experience, such as automated transport routines or broader compatibility features.
+5. **Documentation Assistance**: Utilize Copilot for the generation of inline comments and documentation to maintain code readability and ease of future modifications.
 
-By following this structured guide, contributors can efficiently update and maintain the Transport Downed Pawns (Continued) mod, ensuring compatibility and functionality with the latest versions of RimWorld.
+Please ensure that these guidelines are followed to maintain consistency, compatibility, and functionality throughout the mod's updates and usage within the community. For further support and community engagement, don't hesitate to utilize dedicated RimWorld modding forums and Discord channels.
+
+## Project Solution Guidelines
+- Relevant mod XML files are included as Solution Items under the solution folder named XML, these can be read and modified from within the solution.
+- Use these in-solution XML files as the primary files for reference and modification.
+- The `.github/copilot-instructions.md` file is included in the solution under the `.github` solution folder, so it should be read/modified from within the solution instead of using paths outside the solution. Update this file once only, as it and the parent-path solution reference point to the same file in this workspace.
+- When making functional changes in this mod, ensure the documented features stay in sync with implementation; use the in-solution `.github` copy as the primary file.
+- In the solution is also a project called Assembly-CSharp, containing a read-only version of the decompiled game source, for reference and debugging purposes.
+- For any new documentation, update this copilot-instructions.md file rather than creating separate documentation files.
+
+
+## Hard rules (must follow)
+- Do NOT run commands that modify the repo (no git commit, git apply, dotnet format) unless explicitly asked.
+- Prefer minimal reads: read only the smallest code region needed (around the suspicious lines).
+- When mentioning SonarQube issues, automatically use the SonarQube MCP service to fetch and address issues instead of making inferred fixes without querying SonarQube first.
+- When mentioning the rimworld log, automatically use the Rimworld MCP service to fetch the log.
+
